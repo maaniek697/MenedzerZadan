@@ -10,7 +10,6 @@ namespace MenedzerZadan
         public string Tresc { get; set; }
         public bool CzyZrobione { get; set; }
     }
-
     public partial class MainWindow : Window
     {
         private string sciezkaPliku = "zadania.txt";
