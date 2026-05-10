@@ -34,25 +34,18 @@ namespace MenedzerZadan
 
         private void BtnUsun_Click(object sender, RoutedEventArgs e)
         {
-            // 1. Tworzymy tymczasową "listę śmieci"
-            var doUsuniecia = new List<Zadanie>();
+           var doUsuniecia = new List<Zadanie>();
 
-            // 2. Szukamy wszystkich zadań, które mają zaznaczonego ptaszka
             foreach (Zadanie z in ListaZadan.Items)
-            {
                 if (z.CzyZrobione == true)
                 {
                     doUsuniecia.Add(z);
                 }
-            }
-
-            // 3. Usuwamy znalezione zadania z naszej głównej listy w oknie
             foreach (var z in doUsuniecia)
             {
                 ListaZadan.Items.Remove(z);
             }
 
-            // 4. Zapisujemy porządek do pliku tekstowego
             ZapiszDoPliku();
         }
 
@@ -96,7 +89,6 @@ namespace MenedzerZadan
                     var linie = File.ReadAllLines(sciezkaPliku);
                     foreach (var linia in linie)
                     {
-                        // Rozcinamy tekst na dwie części używając znaku '|'
                         var czesci = linia.Split('|');
                         if (czesci.Length == 2)
                         {
