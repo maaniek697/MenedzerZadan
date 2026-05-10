@@ -21,4 +21,5 @@ Prosta i intuicyjna aplikacja okienkowa (Desktop) do zarządzania codziennymi za
 
 
 Otwórz pobrany folder jako projekt w środowisku JetBrains Rider (lub Visual Studio).
+
 Uruchom projekt przyciskiem "Play" na górnym pasku.
