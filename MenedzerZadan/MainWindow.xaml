@@ -7,70 +7,85 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
         <Border Padding="20" Background="#1E1E1E">
-                <StackPanel>
-                        <TextBlock Text="📝 Moja Lista Zadań" 
-                                   FontSize="24" 
-                                   FontWeight="Bold" 
-                                   Foreground="#FFFFFF"
-                                   HorizontalAlignment="Center" 
-                                   Margin="0,0,0,20"/>
+    <StackPanel>
+        <TextBlock Text="📝 Moja Lista Zadań" 
+                   FontSize="24" 
+                   FontWeight="Bold" 
+                   Foreground="#FFFFFF"
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,20"/>
 
-                        <DockPanel Margin="0,0,0,15">
-                                <Button x:Name="BtnDodaj" 
-                                        Content="Dodaj" 
-                                        Width="90" 
-                                        DockPanel.Dock="Right" 
-                                        Margin="10,0,0,0"
-                                        Background="#4CAF50" 
-                                        Foreground="White"
-                                        FontWeight="Bold"
-                                        BorderThickness="0"
-                                        Padding="5"
-                                        Cursor="Hand"
-                                        Click="BtnDodaj_Click"/>
+        <DockPanel Margin="0,0,0,15">
+            <Button x:Name="BtnDodaj" 
+                    Content="Dodaj" 
+                    Width="90" 
+                    DockPanel.Dock="Right" 
+                    Margin="10,0,0,0"
+                    Background="#4CAF50" 
+                    Foreground="White"
+                    FontWeight="Bold"
+                    BorderThickness="0"
+                    Padding="5"
+                    Cursor="Hand"
+                    Click="BtnDodaj_Click"/>
             
-                                <TextBox x:Name="TxtZadanie" 
-                                         FontSize="16" 
-                                         Padding="8"
-                                         Background="#2D2D30"
-                                         Foreground="White"
-                                         BorderThickness="0"
-                                         VerticalContentAlignment="Center"
-                                         KeyDown="TxtZadanie_KeyDown"/>
-                        </DockPanel>
+            <TextBox x:Name="TxtZadanie" 
+                     FontSize="16" 
+                     Padding="8"
+                     Background="#2D2D30"
+                     Foreground="White"
+                     BorderThickness="0"
+                     VerticalContentAlignment="Center"
+                     KeyDown="TxtZadanie_KeyDown"/>
+        </DockPanel>
 
-                        <ListBox x:Name="ListaZadan" 
-                                 Height="220" 
-                                 Background="#2D2D30"
+        <ListBox x:Name="ListaZadan" 
+                 Height="220" 
+                 Background="#2D2D30"
+                 BorderThickness="0"
+                 Padding="10"
+                 KeyDown="ListaZadan_KeyDown"
+                 HorizontalContentAlignment="Stretch">
+            
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <CheckBox IsChecked="{Binding CzyZrobione}" 
+                                  VerticalAlignment="Center" 
+                                  Cursor="Hand"
+                                  Click="CheckBox_Click"/>
+                        
+                        <TextBox Text="{Binding Tresc, UpdateSourceTrigger=PropertyChanged}" 
+                                 Foreground="White" 
+                                 Background="Transparent"
                                  BorderThickness="0"
-                                 Padding="10"
-                                 KeyDown="ListaZadan_KeyDown"
-                                 HorizontalContentAlignment="Stretch">
-            
-                                <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                                <CheckBox Content="{Binding Tresc}" 
-                                                          IsChecked="{Binding CzyZrobione}"
-                                                          Foreground="White" 
-                                                          FontSize="16" 
-                                                          Margin="0,5"
-                                                          Cursor="Hand"
-                                                          Click="CheckBox_Click"/>
-                                        </DataTemplate>
-                                </ListBox.ItemTemplate>
-            
-                        </ListBox>
+                                 FontSize="16"
+                                 Margin="10,0,0,0"
+                                 LostFocus="EdycjaZadania_Zapisz"
+                                 KeyDown="EdycjaZadania_KeyDown"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         
-                        <Button x:Name="BtnUsun" 
-                                Content="🗑 Usuń zaznaczone" 
-                                Margin="0,15,0,0" 
-                                Padding="10"
-                                Background="#F44336" 
-                                Foreground="White"
-                                FontWeight="Bold"
-                                BorderThickness="0"
-                                Cursor="Hand"
-                                Click="BtnUsun_Click"/>
-                </StackPanel>
-        </Border>
+        <DockPanel Margin="0,15,0,0">
+            <TextBlock x:Name="TxtLicznik" 
+                       Text="Zrobione: 0 / 0" 
+                       Foreground="#AAAAAA" 
+                       FontSize="14" 
+                       VerticalAlignment="Center"/>
+            
+            <Button x:Name="BtnUsun" 
+                    Content="🗑 Usuń zaznaczone" 
+                    Padding="10"
+                    Background="#F44336" 
+                    Foreground="White"
+                    FontWeight="Bold"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    HorizontalAlignment="Right"
+                    Click="BtnUsun_Click"/>
+        </DockPanel>
+    </StackPanel>
+</Border>
 </Window>

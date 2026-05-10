@@ -5,11 +5,12 @@ using System.Windows.Input;
 
 namespace MenedzerZadan
 {
-  public class Zadanie
+    public class Zadanie
     {
         public string Tresc { get; set; }
         public bool CzyZrobione { get; set; }
     }
+
     public partial class MainWindow : Window
     {
         private string sciezkaPliku = "zadania.txt";
@@ -18,6 +19,7 @@ namespace MenedzerZadan
         {
             InitializeComponent();
             WczytajZPliku();
+            AktualizujLicznik();
         }
 
         private void BtnDodaj_Click(object sender, RoutedEventArgs e)
@@ -27,25 +29,30 @@ namespace MenedzerZadan
                 var noweZadanie = new Zadanie { Tresc = TxtZadanie.Text, CzyZrobione = false };
                 ListaZadan.Items.Add(noweZadanie);
                 TxtZadanie.Clear();
+                
                 ZapiszDoPliku();
+                AktualizujLicznik(); 
             }
         }
 
         private void BtnUsun_Click(object sender, RoutedEventArgs e)
         {
-           var doUsuniecia = new List<Zadanie>();
-
+            var doUsuniecia = new List<Zadanie>();
             foreach (Zadanie z in ListaZadan.Items)
-                if (z.CzyZrobione == true)
+            {
+                if (z.CzyZrobione)
                 {
                     doUsuniecia.Add(z);
                 }
+            }
+
             foreach (var z in doUsuniecia)
             {
                 ListaZadan.Items.Remove(z);
             }
 
             ZapiszDoPliku();
+            AktualizujLicznik(); 
         }
 
         private void TxtZadanie_KeyDown(object sender, KeyEventArgs e)
@@ -64,9 +71,41 @@ namespace MenedzerZadan
             }
         }
 
-       private void CheckBox_Click(object sender, RoutedEventArgs e)
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             ZapiszDoPliku();
+            AktualizujLicznik(); 
+        }
+
+        private void EdycjaZadania_Zapisz(object sender, RoutedEventArgs e)
+        {
+            ZapiszDoPliku();
+        }
+
+        private void EdycjaZadania_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Keyboard.ClearFocus(); // Odznaczamy pole tekstowe
+                ZapiszDoPliku();
+            }
+        }
+
+        
+        private void AktualizujLicznik()
+        {
+            int wszystkie = ListaZadan.Items.Count;
+            int zrobione = 0;
+
+            foreach (Zadanie z in ListaZadan.Items)
+            {
+                if (z.CzyZrobione)
+                {
+                    zrobione++;
+                }
+            }
+
+            TxtLicznik.Text = $"Zrobione: {zrobione} / {wszystkie}";
         }
 
         private void ZapiszDoPliku()
@@ -81,7 +120,7 @@ namespace MenedzerZadan
 
         private void WczytajZPliku()
         {
-           try
+            try
             {
                 if (File.Exists(sciezkaPliku))
                 {
@@ -103,7 +142,7 @@ namespace MenedzerZadan
             }
             catch
             {
-               File.Delete(sciezkaPliku);
+                File.Delete(sciezkaPliku);
             }
         }
     }
